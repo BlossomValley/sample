@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
         $user->name = 'jinhesui';
         $user->email = 'jinhesui@163.com';
         $user->password = bcrypt('password');
+        $user->avatar = 'http://www.gravatar.com/avatar/9e75bfd9f9c409516f52265c32bde750?s=140';
         $user->is_admin = true;
         $user->activated = true;
         $user->save();

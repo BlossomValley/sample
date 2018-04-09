@@ -20,6 +20,7 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->safeEmail,
+        'avatar' => 'http://www.gravatar.com/avatar/9e75bfd9f9c409516f52265c32bde750?s=140',
         'is_admin' => false,
         'activated' => true,
         'password' => $password ?: $password = bcrypt('secret'),
