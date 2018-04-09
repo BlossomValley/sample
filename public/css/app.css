@@ -8587,6 +8587,12 @@ input {
   margin-top: 50px;
 }
 
+img.captcha {
+  margin-bottom: 0px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
 /* Users edit */
 
 .gravatar_edit {
