@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Models\User;
 use Auth;
 use Mail;
+use App\Handlers\ImageUploadHandler;
 
 class UsersController extends Controller
 {
@@ -69,11 +70,15 @@ class UsersController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function update(User $user, Request $request)
+    public function update(User $user, ImageUploadHandler $uploader, Request $request)
     {
         $this->validate($request, [
             'name' => 'required|max:50',
-            'password' => 'nullable|confirmed|min:6'
+            'password' => 'nullable|confirmed|min:6',
+            'avatar' => 'mimes:jpeg,bmp,png,gif|dimensions:min_width=200,min_height=200',
+        ], [
+            'avatar.mimes' =>'头像必须是 jpeg, bmp, png, gif 格式的图片',
+            'avatar.dimensions' => '图片的清晰度不够，宽和高需要 200px 以上',
         ]);
 
         $this->authorize('update', $user);
@@ -82,6 +87,12 @@ class UsersController extends Controller
         $data['name'] = $request->name;
         if ($request->password) {
             $data['password'] = bcrypt($request->password);
+        }
+        if ($request->avatar) {
+            $result = $uploader->save($request->avatar, 'avatars', $user->id, 140);
+            if ($result) {
+                $data['avatar'] = $result['path'];
+            }
         }
         $user->update($data);
 

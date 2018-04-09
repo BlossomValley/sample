@@ -13,13 +13,18 @@
 
         <div class="gravatar_edit">
           <a href="http://gravatar.com/emails" target="_blank">
-            <img src="{{ $user->gravatar('200') }}" alt="{{ $user->name }}" class="gravatar"/>
+            <img src="{{ $user->avatar }}" alt="{{ $user->name }}" class="gravatar"/>
           </a>
         </div>
 
-        <form method="POST" action="{{ route('users.update', $user->id )}}">
+        <form method="POST" action="{{ route('users.update', $user->id )}}" enctype="multipart/form-data">
             {{ method_field('PATCH') }}
             {{ csrf_field() }}
+
+            <div class="form-group">
+                    <label for="avatar" >用户头像:</label>
+                    <input type="file" name="avatar" class="form-control">
+            </div>
 
             <div class="form-group">
               <label for="name">名称：</label>
